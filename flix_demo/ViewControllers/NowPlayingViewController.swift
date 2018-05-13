@@ -11,13 +11,12 @@ import AlamofireImage
 
 
 class NowPlayingViewController: UIViewController, UITableViewDataSource {
-
+    
     @IBOutlet weak var tableView: UITableView!
     var refreshControl: UIRefreshControl!
     
     var movies: [[String: Any]] = []
     //tableView.estimatedRowHeight = 85.0
-    //tableView.rowHeight = UITableViewAutomaticDimensio
     
     
     override func viewDidLoad() {
@@ -62,7 +61,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         
         task.resume()
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
@@ -88,11 +87,20 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! UITableViewCell
+        if let indexPath = tableView.indexPath(for: cell){
+            let movie = movies[indexPath.row]
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.movie = movie
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
     
-
-
+    
+    
+    
 }
